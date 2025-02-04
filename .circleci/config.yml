@@ -27,11 +27,14 @@ jobs:
           command: |
             echo "Building Docker image..."
             docker build -t $DOCKER_USERNAME/basic:latest .
+      - run:
+          name: Push Docker Image to Docker Hub
+          command: |
             echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
             docker push $DOCKER_USERNAME/basic:latest
 
 workflows:
-  build_test:
+  build_and_deploy:
     jobs:
       - build_test
       - build_docker_image
